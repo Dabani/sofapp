@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# sofapp-backend
-Soccer Federation Application Backend
-
 # SOFAPP
 
 ## Project name
@@ -105,7 +101,3 @@ The current scope includes the management of leagues, fixtures and tables.
 ## Future extensions
 
 Executive and administration, Disciplinary, Complains, Trainings, Transfers, Partnership, Support &amp; Assistance, Assemblies, Press Releases, etc…
-||||||| merged common ancestors
-=======
-# sofapp
->>>>>>> d3123dd1569bc0f85848599a3a40ce07b306ddb9
