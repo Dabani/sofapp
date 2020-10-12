@@ -1,14 +1,14 @@
 {
-  "name": "sofapp-backend",
+  "name": "sofapp",
   "version": "1.0.0",
-  "description": "Soccer Federation Application Backend",
+  "description": "Soccer Federation Application",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dabani/sofapp-backend.git"
+    "url": "git+https://github.com/Dabani/sofapp.git"
   },
   "keywords": [
     "node.js",
@@ -20,9 +20,9 @@
   "author": "Robert Makuta",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Dabani/sofapp-backend/issues"
+    "url": "https://github.com/Dabani/sofapp/issues"
   },
-  "homepage": "https://github.com/Dabani/sofapp-backend#readme",
+  "homepage": "https://github.com/Dabani/sofapp#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
