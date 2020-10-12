@@ -19,7 +19,7 @@ const getPagingData = (data, page, limit) => {
 // Create and Save a new Profile
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.name) {
+  if (!req.body.firstName) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -61,8 +61,8 @@ exports.create = (req, res) => {
 // Retrieve all Profiles from the database.
 exports.findAll = (req, res) => {
 
-  const { page, size, name } = req.query;
-  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+  const { page, size, firstName } = req.query;
+  var condition = firstName ? { firstName: { [Op.like]: `%${firstName}%` } } : null;
 
   const { limit, offset } = getPagination(page, size);
 

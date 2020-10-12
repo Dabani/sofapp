@@ -7,13 +7,16 @@ module.exports = (sequelize, Sequelize) => {
     },
     federationId: {
       type: Sequelize.INTEGER,
-      foreignKey: true
+      foreignKey: true,
+      allowNull: false
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     slug: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     description: {
       type: Sequelize.TEXT("medium")
@@ -27,9 +30,6 @@ module.exports = (sequelize, Sequelize) => {
     webUrl: {
       type: Sequelize.STRING
     },
-    country: {
-      type: Sequelize.STRING
-    },
     location: {
       type: Sequelize.STRING
     },
@@ -37,7 +37,8 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     published: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      default: false
     }
   });
 

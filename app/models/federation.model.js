@@ -6,10 +6,14 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
     },
     slug: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
     },
     description: {
       type: Sequelize.TEXT("medium")
@@ -24,7 +28,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     country: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
     },
     location: {
       type: Sequelize.STRING

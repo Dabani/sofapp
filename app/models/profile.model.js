@@ -6,13 +6,17 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true
     },
     userId: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      unique: true
     },
     firstName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     lastName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     otherName: {
       type: Sequelize.STRING
@@ -22,16 +26,20 @@ module.exports = (sequelize, Sequelize) => {
       values: ["female", "male"]
     },
     dateOfBirth: {
-      type: Sequelize.DATEONLY
+      type: Sequelize.DATEONLY,
+      allowNull: false
     },
     placeOfBirth: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     nationalityAtBirth: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     nationalityCurrent: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     biography: {
       type: Sequelize.TEXT("long")
@@ -47,7 +55,8 @@ module.exports = (sequelize, Sequelize) => {
     },
     state: {
       type: Sequelize.ENUM,
-      values: ["public", "private", "relative"]
+      values: ["public", "private", "relative"],
+      default: "private"
     },
     published: {
       type: Sequelize.BOOLEAN,
