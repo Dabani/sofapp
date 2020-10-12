@@ -77,6 +77,24 @@ db.user.belongsToMany(db.league, {
   otherKey: "leagueId"
 });
 
+db.competition.belongsTo(db.federation);
+db.federation.hasMany(db.competition, {
+  foreignKey: "federationId"
+});
+
+db.competition.belongsToMany(db.user, {
+  through: "user_competitions",
+  as: "users",
+  foreignKey: "competitionId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.competition, {
+  through: "user_competitions",
+  as: "competitions",
+  foreignKey: "userId",
+  otherKey: "competitionId"
+});
+
 
 
 

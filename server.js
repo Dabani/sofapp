@@ -10,7 +10,10 @@ var corsOptions = {
 
 const db = require("./app/models");
 const UserController = require("./app/controllers/user.controller");
+const ProfileController = require("./app/controllers/profile.controller");
 const FederationController = require("./app/controllers/federation.controller");
+const LeagueController = require("./app/controllers/league.controller");
+const CompetitionController = require("./app/controllers/competition.controller");
 const Role = db.role;
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -35,6 +38,8 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/profile.routes")(app);
 require("./app/routes/federation.routes")(app);
+require("./app/routes/league.routes")(app);
+require("./app/routes/competition.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -87,6 +92,18 @@ function initial() {
 const users = await UserController.findAll();
 console.log(">> users", JSON.stringify(users, null, 2));
 
-// Show all Users
+// Show all Federations
 const federations = await FederationController.findAll();
 console.log(">> federations", JSON.stringify(federations, null, 2));
+
+// Show all Profiles
+const profiles = await ProfileController.findAll();
+console.log(">> profiles", JSON.stringify(profiles, null, 2));
+
+// Show all Leagues
+const leagues = await LeagueController.findAll();
+console.log(">> leagues", JSON.stringify(leagues, null, 2));
+
+// Show all Competitions
+const competitions = await CompetitionController.findAll();
+console.log(">> competitions", JSON.stringify(competitions, null, 2));

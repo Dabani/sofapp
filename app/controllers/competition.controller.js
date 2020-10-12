@@ -1,5 +1,5 @@
 const db = require("../models");
-const { user, league, competition } = require("../models");
+const { user } = require("../models");
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -10,14 +10,14 @@ const getPagination = (page, size) => {
 };
 
 const getPagingData = (data, page, limit) => {
-  const { count: totalItems, rows: federations } = data;
+  const { count: totalItems, rows: competitions } = data;
   const currentPage = page ? +page : 0;
   const totalPages = Math.ceil(totalItems / limit);
 
-  return { totalItems, federations, totalPages, currentPage };
+  return { totalItems, competitions, totalPages, currentPage };
 };
 
-// Create and Save a new Federation
+// Create and Save a new Competition
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.name) {
@@ -27,35 +27,31 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Federation
-  const federation = {
+  // Create a Competition
+  const competition = {
+    federationId: req.body.federationId,
     name: req.body.name,
     slug: req.body.slug,
     description: req.body.description,
-    telephone: req.body.telephone,
-    email: req.body.email,
-    webUrl: req.body.webUrl,
-    country: req.body.country,
-    location: req.body.location,
     logoUrl: req.body.logoUrl,
     published: req.body.published ? req.body.published : false
   };
 
-  // Save Federation in the database
-  db.federation.create(federation)
+  // Save Competition in the database
+  db.competition.create(competition)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Federation."
+          err.message || "Some error occurred while creating the Competition."
       });
     });
 
 };
 
-// Retrieve all Federations from the database.
+// Retrieve all Competitions from the database.
 exports.findAll = (req, res) => {
 
   const { page, size, name } = req.query;
@@ -63,7 +59,7 @@ exports.findAll = (req, res) => {
 
   const { limit, offset } = getPagination(page, size);
 
-  db.federation.findAndCountAll({ 
+  db.competition.findAndCountAll({
     include: [
       {
         model: db.user,
@@ -73,24 +69,8 @@ exports.findAll = (req, res) => {
           attributes: [],
         }
       },
-      {
-        model: db.league,
-        as: "leagues",
-        attributes: ["id", "name"],
-        through: {
-          attributes: [],
-        }
-      },
-      {
-        model: db.competition,
-        as: "competitions",
-        attributes: ["id", "name"],
-        through: {
-          attributes: [],
-        }
-      },
     ],
-    where: condition, limit, offset 
+    where: condition, limit, offset
   })
     .then(data => {
       const response = getPagingData(data, page, limit);
@@ -99,38 +79,22 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving federations."
+          err.message || "Some error occurred while retrieving competitions."
       });
     });
 
 };
 
-// Find a single Federation with an id
+// Find a single Competition with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  db.federation.findByPk(id, {
+  db.competition.findByPk(id, {
     include: [
       {
         model: db.user,
         as: "users",
         attributes: ["id", "username"],
-        through: {
-          attributes: [],
-        }
-      }, ,
-      {
-        model: db.league,
-        as: "leagues",
-        attributes: ["id", "name"],
-        through: {
-          attributes: [],
-        }
-      },
-      {
-        model: db.competition,
-        as: "competitions",
-        attributes: ["id", "name"],
         through: {
           attributes: [],
         }
@@ -142,87 +106,87 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Federation with id=" + id
+        message: "Error retrieving Competition with id=" + id
       });
     });
 
 };
 
-// Update a Federation by the id in the request
+// Update a Competition by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  db.federation.update(req.body, {
+  db.competition.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Federation was updated successfully."
+          message: "Competition was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Federation with id=${id}. Maybe Federation was not found or req.body is empty!`
+          message: `Cannot update Competition with id=${id}. Maybe Competition was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Federation with id=" + id
+        message: "Error updating Competition with id=" + id
       });
     });
 };
 
-// Delete a Federation with the specified id in the request
+// Delete a Competition with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  db.federation.destroy({
+  db.competition.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Federation was deleted successfully!"
+          message: "Competition was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Federation with id=${id}. Maybe Federation was not found!`
+          message: `Cannot delete Competition with id=${id}. Maybe Competition was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Federation with id=" + id
+        message: "Could not delete Competition with id=" + id
       });
     });
 };
 
-// Delete all Federations from the database.
+// Delete all Competitions from the database.
 exports.deleteAll = (req, res) => {
-  db.federation.destroy({
+  db.competition.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Federations were deleted successfully!` });
+      res.send({ message: `${nums} Competitions were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all federations."
+          err.message || "Some error occurred while removing all competitions."
       });
     });
 
 };
 
-// Find all published Federations
+// Find all published Competitions
 exports.findAllPublished = (req, res) => {
-  
+
   const { page, size } = req.query;
   const { limit, offset } = getPagination(page, size);
 
-  db.federation.findAndCountAll({ where: { published: true }, limit, offset })
+  db.competition.findAndCountAll({ where: { published: true }, limit, offset })
     .then(data => {
       const response = getPagingData(data, page, limit);
       res.send(response);
@@ -230,18 +194,18 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving federations."
+          err.message || "Some error occurred while retrieving competitions."
       });
     });
 
 };
 
-// Add a User to a Federation
-exports.addUser = (federationId, userId) => {
-  return db.federation.findByPk(federationId)
-    .then((federation) => {
-      if (!federation) {
-        console.log("Federation not found!");
+// Add a User to a Competition
+exports.addUser = (competitionId, userId) => {
+  return db.competition.findByPk(competitionId)
+    .then((competition) => {
+      if (!competition) {
+        console.log("Competition not found!");
         return null;
       }
       return db.user.findByPk(userId).then((user) => {
@@ -250,12 +214,12 @@ exports.addUser = (federationId, userId) => {
           return null;
         }
 
-        federation.addUser(user);
-        console.log(`>> added User id=${user.id} to Federation id=${federation.id}`);
-        return federation;
+        competition.addUser(user);
+        console.log(`>> added User id=${user.id} to Competition id=${competition.id}`);
+        return competition;
       });
     })
     .catch((err) => {
-      console.log(">> Error while adding User to Federation: ", err);
+      console.log(">> Error while adding User to Competition: ", err);
     });
 };
