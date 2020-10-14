@@ -1,5 +1,5 @@
 const db = require("../models");
-const { user, league, competition } = require("../models");
+const { user, league, competition, profile } = require("../models");
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -68,15 +68,26 @@ exports.findAll = (req, res) => {
       {
         model: db.user,
         as: "users",
-        attributes: ["id", "username"],
+        attributes: ["id", "username", "email"],
         through: {
           attributes: [],
+        },
+        include: {
+          model: db.profile,
+          as: "profile",
+          where: {
+            userId: db.user.id
+          },
+          attributes: ["firstName", "lastName", "otherName", "gender", "dateOfBirth", "placeOfBirth", "nationalityAtBirth", "nationalityCurrent", "biography", "telephone", "webUrl", "imageUrl", "state", "published"],
+          through: {
+            attributes: []
+          }
         }
       },
       {
         model: db.league,
         as: "leagues",
-        attributes: ["id", "name"],
+        attributes: ["id", "name", "slug", "description", "telephone", "email", "webUrl", "location", "logoUrl", "published"],
         through: {
           attributes: [],
         }
@@ -114,15 +125,23 @@ exports.findOne = (req, res) => {
       {
         model: db.user,
         as: "users",
-        attributes: ["id", "username"],
+        attributes: ["id", "username", "email", "state"],
         through: {
           attributes: [],
+        },
+        include: {
+          model: db.profile,
+          as: "profile",
+          attributes: ["firstName", "lastName", "otherName", "gender", "dateOfBirth", "placeOfBirth", "nationalityAtBirth", "nationalityCurrent", "biography", "telephone", "webUrl", "imageUrl", "state", "published"],
+          through: {
+            attributes: []
+          }
         }
-      }, ,
+      },
       {
         model: db.league,
         as: "leagues",
-        attributes: ["id", "name"],
+        attributes: ["id", "name", "slug", "description", "telephone", "email", "webUrl", "location", "logoUrl", "published"],
         through: {
           attributes: [],
         }

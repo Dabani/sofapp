@@ -93,17 +93,17 @@ const users = await UserController.findAll();
 console.log(">> users", JSON.stringify(users, null, 2));
 
 // Show all Federations
-const federations = await FederationController.findAll();
+const federations = FederationController.findAll();
 console.log(">> federations", JSON.stringify(federations, null, 2));
 
 // Show all Profiles
-const profiles = await ProfileController.findAll();
+const profiles = ProfileController.findAll();
 console.log(">> profiles", JSON.stringify(profiles, null, 2));
 
 // Show all Leagues
-const leagues = await LeagueController.findAll();
+const leagues = LeagueController.findAll();
 console.log(">> leagues", JSON.stringify(leagues, null, 2));
 
 // Show all Competitions
-const competitions = await CompetitionController.findAll();
+const competitions = CompetitionController.findAll();
 console.log(">> competitions", JSON.stringify(competitions, null, 2));
