@@ -6,12 +6,12 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true
     },
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false,
       unique: true
     },
     slug: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false,
       unique: true
     },
@@ -19,24 +19,24 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.TEXT("medium")
     },
     telephone: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     email: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     webUrl: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     country: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false,
       unique: true
     },
     location: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     logoUrl: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     published: {
       type: Sequelize.BOOLEAN

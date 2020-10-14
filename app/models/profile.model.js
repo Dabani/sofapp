@@ -11,15 +11,15 @@ module.exports = (sequelize, Sequelize) => {
       unique: true
     },
     firstName: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     lastName: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     otherName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     gender: {
       type: Sequelize.ENUM,
@@ -30,28 +30,28 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     placeOfBirth: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     nationalityAtBirth: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     nationalityCurrent: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     biography: {
       type: Sequelize.TEXT("long")
     },
     telephone: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     webUrl: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     imageUrl: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     state: {
       type: Sequelize.ENUM,

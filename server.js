@@ -1,3 +1,4 @@
+"use-strict";
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -88,8 +89,9 @@ function initial() {
   });
 }
 
+/* 
 // Show all Users
-const users = await UserController.findAll();
+const users = UserController.findAll();
 console.log(">> users", JSON.stringify(users, null, 2));
 
 // Show all Federations
@@ -107,3 +109,5 @@ console.log(">> leagues", JSON.stringify(leagues, null, 2));
 // Show all Competitions
 const competitions = CompetitionController.findAll();
 console.log(">> competitions", JSON.stringify(competitions, null, 2));
+
+ */

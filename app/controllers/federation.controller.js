@@ -1,5 +1,10 @@
 const db = require("../models");
-const { user, league, competition, profile } = require("../models");
+// const { user, league, competition, profile } = require("../models");
+const User = db.user;
+const League = db.league;
+const Competition = db.competition;
+const Profile = db.profile;
+
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -66,17 +71,17 @@ exports.findAll = (req, res) => {
   db.federation.findAndCountAll({ 
     include: [
       {
-        model: db.user,
+        model: User,
         as: "users",
         attributes: ["id", "username", "email"],
         through: {
           attributes: [],
         },
         include: {
-          model: db.profile,
+          model: Profile,
           as: "profile",
           where: {
-            userId: db.user.id
+            userId: User.id
           },
           attributes: ["firstName", "lastName", "otherName", "gender", "dateOfBirth", "placeOfBirth", "nationalityAtBirth", "nationalityCurrent", "biography", "telephone", "webUrl", "imageUrl", "state", "published"],
           through: {
@@ -85,7 +90,7 @@ exports.findAll = (req, res) => {
         }
       },
       {
-        model: db.league,
+        model: League,
         as: "leagues",
         attributes: ["id", "name", "slug", "description", "telephone", "email", "webUrl", "location", "logoUrl", "published"],
         through: {
@@ -93,9 +98,9 @@ exports.findAll = (req, res) => {
         }
       },
       {
-        model: db.competition,
+        model: Competition,
         as: "competitions",
-        attributes: ["id", "name"],
+        attributes: ["id", "name", "slug", "description", "logoUrl", "published"],
         through: {
           attributes: [],
         }
@@ -123,14 +128,14 @@ exports.findOne = (req, res) => {
   db.federation.findByPk(id, {
     include: [
       {
-        model: db.user,
+        model: User,
         as: "users",
         attributes: ["id", "username", "email", "state"],
         through: {
           attributes: [],
         },
         include: {
-          model: db.profile,
+          model: Profile,
           as: "profile",
           attributes: ["firstName", "lastName", "otherName", "gender", "dateOfBirth", "placeOfBirth", "nationalityAtBirth", "nationalityCurrent", "biography", "telephone", "webUrl", "imageUrl", "state", "published"],
           through: {
@@ -139,7 +144,7 @@ exports.findOne = (req, res) => {
         }
       },
       {
-        model: db.league,
+        model: League,
         as: "leagues",
         attributes: ["id", "name", "slug", "description", "telephone", "email", "webUrl", "location", "logoUrl", "published"],
         through: {
@@ -147,9 +152,9 @@ exports.findOne = (req, res) => {
         }
       },
       {
-        model: db.competition,
+        model: Competition,
         as: "competitions",
-        attributes: ["id", "name"],
+        attributes: ["id", "name", "slug", "description", "logoUrl", "published"],
         through: {
           attributes: [],
         }

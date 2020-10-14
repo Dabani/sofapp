@@ -29,6 +29,7 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.profile = require("../models/profile.model.js")(sequelize, Sequelize);
 db.federation = require("../models/federation.model.js")(sequelize, Sequelize);
 db.league = require("../models/league.model.js")(sequelize, Sequelize);
+db.competition = require("../models/competition.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

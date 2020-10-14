@@ -1,5 +1,6 @@
 const db = require("../models");
-const { user } = require("../models");
+// const { user } = require("../models");
+const User = db.user
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -66,7 +67,7 @@ exports.findAll = (req, res) => {
   db.league.findAndCountAll({
     include: [
       {
-        model: db.user,
+        model: User,
         as: "users",
         attributes: ["id", "username"],
         through: {
@@ -96,7 +97,7 @@ exports.findOne = (req, res) => {
   db.league.findByPk(id, {
     include: [
       {
-        model: db.user,
+        model: User,
         as: "users",
         attributes: ["id", "username"],
         through: {

@@ -11,18 +11,18 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     slug: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     description: {
       type: Sequelize.TEXT("medium")
     },
     logoUrl: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(191)
     },
     published: {
       type: Sequelize.BOOLEAN,
