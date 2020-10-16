@@ -102,3 +102,11 @@ db.user.belongsToMany(db.competition, {
 db.ROLES = ["user", "player", "agent", "manager", "executive", "referee", "staff", "admin"];
 
 module.exports = db;
+
+/**
+ * SequelizeBaseError:
+ * Specified key was too long; max key length is 767 bytes
+ * ==================================
+ * This error happens in MySql 5.6+, due to utf8mb64 charset.
+ * To fix it you have to set the size of STRING to 191-.
+ */
