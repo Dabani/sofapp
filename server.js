@@ -15,6 +15,7 @@ const ProfileController = require("./app/controllers/profile.controller");
 const FederationController = require("./app/controllers/federation.controller");
 const LeagueController = require("./app/controllers/league.controller");
 const CompetitionController = require("./app/controllers/competition.controller");
+const TeamController = require("./app/controllers/team.controller");
 const Role = db.role;
 const User = db.user;
 // const UserRole = db.user_role;
@@ -23,6 +24,7 @@ const Federation = db.federation;
 // const UserFederation = db.user_federation;
 const League = db.league;
 const Competition = db.competition;
+const Team = db.team;
 
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -49,6 +51,7 @@ require("./app/routes/profile.routes")(app);
 require("./app/routes/federation.routes")(app);
 require("./app/routes/league.routes")(app);
 require("./app/routes/competition.routes")(app);
+require("./app/routes/team.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -584,6 +587,97 @@ function initial() {
     logoUrl: "",
     published: true
   });
+
+  Team.create({
+    id: 1,
+    leagueId: 1,
+    name: "Kiyovu SC",
+    slug: "kiyovu-sc",
+    description: "",
+    colors: "Green, White",
+    telephone: "",
+    email: "kiyovu@sofapp.com",
+    webUrl: "kiyovu.sofapp.com",
+    location: "Nyamirambo",
+    logoUrl: "kiyovu.png",
+    published: true
+  });
+
+  Team.create({
+    id: 2,
+    leagueId: 1,
+    name: "Etincelles FC",
+    slug: "etincelles-fc",
+    description: "",
+    colors: "Red, White",
+    telephone: "",
+    email: "etincelles@sofapp.com",
+    webUrl: "etincelles.sofapp.com",
+    location: "Rubavu",
+    logoUrl: "etincelles.png",
+    published: true
+  });
+
+  Team.create({
+    id: 3,
+    leagueId: 1,
+    name: "APR FC",
+    slug: "apr-fc",
+    description: "",
+    colors: "Black, White",
+    telephone: "",
+    email: "apr@sofapp.com",
+    webUrl: "apr.sofapp.com",
+    location: "Kigali",
+    logoUrl: "apr.png",
+    published: true
+  });
+
+  Team.create({
+    id: 4,
+    leagueId: 1,
+    name: "Mukura VSL",
+    slug: "mukura-vsl",
+    description: "",
+    colors: "Yellow, Black",
+    telephone: "",
+    email: "mukura@sofapp.com",
+    webUrl: "mukura.sofapp.com",
+    location: "Huye",
+    logoUrl: "mukura.png",
+    published: true
+  });
+
+  Team.create({
+    id: 5,
+    leagueId: 1,
+    name: "Rayon Sports",
+    slug: "rayon-sports",
+    description: "",
+    colors: "Blue, White",
+    telephone: "",
+    email: "rayon.sports@sofapp.com",
+    webUrl: "rayon.sofapp.com",
+    location: "Kigali",
+    logoUrl: "rayon.png",
+    published: true
+  });
+
+  Team.create({
+    id: 6,
+    leagueId: 1,
+    name: "Musanze FC",
+    slug: "musanze-fc",
+    description: "",
+    colors: "Red, White",
+    telephone: "",
+    email: "musanze@sofapp.com",
+    webUrl: "musanze.sofapp.com",
+    location: "Kigali",
+    logoUrl: "musanze.png",
+    published: true
+  });
+
 /* 
   // Show all Users
   const users = await UserController.findAll();

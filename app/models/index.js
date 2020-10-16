@@ -30,6 +30,7 @@ db.profile = require("../models/profile.model.js")(sequelize, Sequelize);
 db.federation = require("../models/federation.model.js")(sequelize, Sequelize);
 db.league = require("../models/league.model.js")(sequelize, Sequelize);
 db.competition = require("../models/competition.model.js")(sequelize, Sequelize);
+db.team = require("../models/team.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -95,6 +96,25 @@ db.user.belongsToMany(db.competition, {
   foreignKey: "userId",
   otherKey: "competitionId"
 });
+
+db.team.belongsTo(db.league);
+db.league.hasMany(db.team, {
+  foreignKey: "leagueId"
+});
+
+db.team.belongsToMany(db.user, {
+  through: "user_teams",
+  as: "users",
+  foreignKey: "teamId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.team, {
+  through: "user_teams",
+  as: "teams",
+  foreignKey: "userId",
+  otherKey: "teamId"
+});
+
 
 
 
