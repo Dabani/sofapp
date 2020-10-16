@@ -17,10 +17,13 @@ const LeagueController = require("./app/controllers/league.controller");
 const CompetitionController = require("./app/controllers/competition.controller");
 const Role = db.role;
 const User = db.user;
-const UserRole = db.user_role;
+// const UserRole = db.user_role;
 const Profile = db.profile;
 const Federation = db.federation;
-const UserFederation = db.user_federation;
+// const UserFederation = db.user_federation;
+const League = db.league;
+const Competition = db.competition;
+
 
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and Resync Db");
@@ -281,7 +284,7 @@ function initial() {
     state: "private",
     published: true
   });
-
+/* 
   UserRole.create({
     roleId: 8,
     userId: 1
@@ -316,7 +319,7 @@ function initial() {
     roleId: 2,
     userId: 7
   });
-
+ */
   Federation.create({
     id: 1,
     name: "FERWAFA",
@@ -428,7 +431,7 @@ function initial() {
     logoUrl: "fefa.png",
     published: true
   });
-
+/* 
   UserFederation.create({
     federationId: 1,
     userId: 1
@@ -468,48 +471,139 @@ function initial() {
     federationId: 8,
     userId: 5
   });
+ */
 
+  League.create({
+    id: 1,
+    federationId: 1,
+    name: "Rwanda Soccer Men Leagues",
+    slug: "rwanda-soccer-men-leagues",
+    description: "",
+    telephone: "",
+    email: "men.leagues@ferwafa.rw",
+    webUrl: "men.ferwafa.rw",
+    location: "Kigali",
+    logoUrl: "men_ferwafa.png",
+    published: true
+  });
 
+  League.create({
+    id: 2,
+    federationId: 1,
+    name: "Rwanda Soccer Women Leagues",
+    slug: "rwanda-soccer-women-leagues",
+    description: "",
+    telephone: "",
+    email: "women.leagues@ferwafa.rw",
+    webUrl: "women.ferwafa.rw",
+    location: "Kigali",
+    logoUrl: "women_ferwafa.png",
+    published: false
+  });
+
+  League.create({
+    id: 3,
+    federationId: 1,
+    name: "Rwanda Soccer Academy Leagues",
+    slug: "rwanda-soccer-academy-leagues",
+    description: "",
+    telephone: "",
+    email: "academy.leagues@ferwafa.rw",
+    webUrl: "academies.ferwafa.rw",
+    location: "Kigali",
+    logoUrl: "academies_ferwafa.png",
+    published: false
+  });
+
+  Competition.create({
+    id: 1,
+    leagueId: 1,
+    name: "Rwanda Premier League",
+    slug: "rwanda-premier-league",
+    description: "Rwandan men first division championship",
+    logoUrl: "",
+    published: true
+  });
+
+  Competition.create({
+    id: 2,
+    leagueId: 1,
+    name: "Rwanda Second Division Pool A",
+    slug: "rwanda-second-division-pool-a",
+    description: "Rwandan men second division championship normal season pool A",
+    logoUrl: "",
+    published: true
+  });
+
+  Competition.create({
+    id: 3,
+    leagueId: 1,
+    name: "Rwanda Second Division Pool B",
+    slug: "rwanda-second-division-pool-b",
+    description: "Rwandan men second division championship normal season pool B",
+    logoUrl: "",
+    published: true
+  });
+
+  Competition.create({
+    id: 4,
+    leagueId: 1,
+    name: "Rwanda Second Division Play Off",
+    slug: "rwanda-second-division-play-off",
+    description: "Rwandan men second division championship play off phase. Top two of each second division pool are qualified for!",
+    logoUrl: "",
+    published: true
+  });
+
+  Competition.create({
+    id: 5,
+    leagueId: 1,
+    name: "Rwanda Men Peace Cup",
+    slug: "rwanda-men-peace-cup",
+    description: "Any team from the Men Leagues can subscribe to the competition.",
+    logoUrl: "",
+    published: true
+  });
+
+  Competition.create({
+    id: 6,
+    leagueId: 1,
+    name: "Heroes Cup",
+    slug: "heroes-cup",
+    description: "Top four men first division chimpionship",
+    logoUrl: "",
+    published: true
+  });
+
+  Competition.create({
+    id: 7,
+    leagueId: 1,
+    name: "Rwanda Women Leagues",
+    slug: "rwanda-women-leagues",
+    description: "Rwanda women first division chimpionship",
+    logoUrl: "",
+    published: true
+  });
+/* 
   // Show all Users
-  const users = UserController.findAll();
+  const users = await UserController.findAll();
   console.log(">> users", JSON.stringify(users, null, 2));
 
   // Show all Federations
-  const federations = FederationController.findAll();
+  const federations = await FederationController.findAll();
   console.log(">> federations", JSON.stringify(federations, null, 2));
 
   // Show all Profiles
-  const profiles = ProfileController.findAll();
+  const profiles = await ProfileController.findAll();
   console.log(">> profiles", JSON.stringify(profiles, null, 2));
 
   // Show all Leagues
-  const leagues = LeagueController.findAll();
+  const leagues = await LeagueController.findAll();
   console.log(">> leagues", JSON.stringify(leagues, null, 2));
 
   // Show all Competitions
-  const competitions = CompetitionController.findAll();
+  const competitions = await CompetitionController.findAll();
   console.log(">> competitions", JSON.stringify(competitions, null, 2));
-}
-
-/* 
-// Show all Users
-const users = UserController.findAll();
-console.log(">> users", JSON.stringify(users, null, 2));
-
-// Show all Federations
-const federations = FederationController.findAll();
-console.log(">> federations", JSON.stringify(federations, null, 2));
-
-// Show all Profiles
-const profiles = ProfileController.findAll();
-console.log(">> profiles", JSON.stringify(profiles, null, 2));
-
-// Show all Leagues
-const leagues = LeagueController.findAll();
-console.log(">> leagues", JSON.stringify(leagues, null, 2));
-
-// Show all Competitions
-const competitions = CompetitionController.findAll();
-console.log(">> competitions", JSON.stringify(competitions, null, 2));
-
  */
+
+}

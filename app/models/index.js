@@ -60,10 +60,10 @@ db.user.hasOne(db.profile, {
   foreignKey: "userId"
 });
 
-db.league.belongsTo(db.federation);
 db.federation.hasMany(db.league, {
   foreignKey: "federationId"
 });
+db.league.belongsTo(db.federation);
 
 db.league.belongsToMany(db.user, {
   through: "user_leagues",
@@ -78,9 +78,9 @@ db.user.belongsToMany(db.league, {
   otherKey: "leagueId"
 });
 
-db.competition.belongsTo(db.federation);
-db.federation.hasMany(db.competition, {
-  foreignKey: "federationId"
+db.competition.belongsTo(db.league);
+db.league.hasMany(db.competition, {
+  foreignKey: "leagueId"
 });
 
 db.competition.belongsToMany(db.user, {

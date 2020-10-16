@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
-    federationId: {
+    leagueId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
       allowNull: false

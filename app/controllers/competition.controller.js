@@ -30,7 +30,7 @@ exports.create = (req, res) => {
 
   // Create a Competition
   const competition = {
-    federationId: req.body.federationId,
+    leagueId: req.body.leagueId,
     name: req.body.name,
     slug: req.body.slug,
     description: req.body.description,

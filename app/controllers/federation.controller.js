@@ -8,7 +8,7 @@ const Profile = db.profile;
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
-  const limit = size ? +size : 3;
+  const limit = size ? +size : 5;
   const offset = page ? page * limit : 0;
 
   return { limit, offset };
@@ -25,9 +25,15 @@ const getPagingData = (data, page, limit) => {
 // Create and Save a new Federation
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.name) {
+  if ((!req.body.name) || (!req.body.email) || (!req.body.telephone) || (!req.body.country)) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: `The following fields:
+      - Name,
+      - Email,
+      - Telephone
+      - Country
+
+      are MENDATORY and can NOT be empty!"`
     });
     return;
   }
@@ -57,7 +63,6 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the Federation."
       });
     });
-
 };
 
 // Retrieve all Federations from the database.
@@ -73,38 +78,46 @@ exports.findAll = (req, res) => {
       {
         model: User,
         as: "users",
-        attributes: ["id", "username", "email"],
+        attributes: ["id", "username", "email", "state"],
         through: {
           attributes: [],
         },
         include: {
-          model: Profile,
-          as: "profile",
-          where: {
-            userId: User.id
-          },
-          attributes: ["firstName", "lastName", "otherName", "gender", "dateOfBirth", "placeOfBirth", "nationalityAtBirth", "nationalityCurrent", "biography", "telephone", "webUrl", "imageUrl", "state", "published"],
-          through: {
-            attributes: []
-          }
+          model: Profile
         }
       },
       {
         model: League,
-        as: "leagues",
-        attributes: ["id", "name", "slug", "description", "telephone", "email", "webUrl", "location", "logoUrl", "published"],
-        through: {
-          attributes: [],
-        }
-      },
-      {
-        model: Competition,
-        as: "competitions",
-        attributes: ["id", "name", "slug", "description", "logoUrl", "published"],
-        through: {
-          attributes: [],
-        }
-      },
+        include: [
+          {
+            model: User,
+            as: "users",
+            attributes: ["id", "username", "email", "state"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Profile
+            }
+          },
+          {
+            model: Competition,
+            include: [
+              {
+                model: User,
+                as: "users",
+                attributes: ["id", "username", "email", "state"],
+                through: {
+                  attributes: [],
+                },
+                include: {
+                  model: Profile
+                }
+              }
+            ]
+          }
+        ]
+      }
     ],
     where: condition, limit, offset 
   })
@@ -135,30 +148,41 @@ exports.findOne = (req, res) => {
           attributes: [],
         },
         include: {
-          model: Profile,
-          as: "profile",
-          attributes: ["firstName", "lastName", "otherName", "gender", "dateOfBirth", "placeOfBirth", "nationalityAtBirth", "nationalityCurrent", "biography", "telephone", "webUrl", "imageUrl", "state", "published"],
-          through: {
-            attributes: []
-          }
+          model: Profile
         }
       },
       {
         model: League,
-        as: "leagues",
-        attributes: ["id", "name", "slug", "description", "telephone", "email", "webUrl", "location", "logoUrl", "published"],
-        through: {
-          attributes: [],
-        }
-      },
-      {
-        model: Competition,
-        as: "competitions",
-        attributes: ["id", "name", "slug", "description", "logoUrl", "published"],
-        through: {
-          attributes: [],
-        }
-      },
+        include: [
+          {
+            model: User,
+            as: "users",
+            attributes: ["id", "username", "email", "state"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Profile
+            }
+          },
+          {
+            model: Competition,
+            include: [
+              {
+                model: User,
+                as: "users",
+                attributes: ["id", "username", "email", "state"],
+                through: {
+                  attributes: [],
+                },
+                include: {
+                  model: Profile
+                }
+              }
+            ]
+          }
+        ]
+      }      
     ],
   })
     .then(data => {
@@ -283,3 +307,29 @@ exports.addUser = (federationId, userId) => {
       console.log(">> Error while adding User to Federation: ", err);
     });
 };
+
+/* 
+// Add a League to a Federation
+exports.addLeague = (federationId, leagueId) => {
+  return db.federation.findByPk(federationId)
+    .then((federation) => {
+      if (!federation) {
+        console.log("Federation not found!");
+        return null;
+      }
+      return db.league.findByPk(leagueId).then((league) => {
+        if (!league) {
+          console.log("League not found!");
+          return null;
+        }
+
+        federation.addLeague(league);
+        console.log(`>> added League id=${league.id} to Federation id=${federation.id}`);
+        return federation;
+      });
+    })
+    .catch((err) => {
+      console.log(">> Error while adding League to Federation: ", err);
+    });
+};
+ */

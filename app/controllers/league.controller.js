@@ -1,10 +1,12 @@
 const db = require("../models");
 // const { user } = require("../models");
-const User = db.user
+const User = db.user;
+const Profile = db.profile;
+const Competition = db.competition;
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
-  const limit = size ? +size : 3;
+  const limit = size ? +size : 5;
   const offset = page ? page * limit : 0;
 
   return { limit, offset };
@@ -69,11 +71,17 @@ exports.findAll = (req, res) => {
       {
         model: User,
         as: "users",
-        attributes: ["id", "username"],
+        attributes: ["id", "username", "email", "state"],
         through: {
           attributes: [],
+        },
+        include: {
+          model: Profile
         }
       },
+      {
+        model: Competition
+      }
     ],
     where: condition, limit, offset
   })
@@ -99,11 +107,17 @@ exports.findOne = (req, res) => {
       {
         model: User,
         as: "users",
-        attributes: ["id", "username"],
+        attributes: ["id", "username", "email", "state"],
         through: {
           attributes: [],
+        },
+        include: {
+          model: Profile
         }
       },
+      {
+        model: Competition
+      }
     ],
   })
     .then(data => {

@@ -20,9 +20,16 @@ const getPagingData = (data, page, limit) => {
 // Create and Save a new Profile
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.firstName) {
+  if ((!req.body.firstName) || (!req.body.lastName) || (!req.body.dateOfBirth) || (!req.body.nationalityAtBirth) || (!req.body.nationalityCurrent)) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: `The following fields:
+      - Firstname,
+      - Lastname,
+      - Date of Birth,
+      - Nationality at Birth and
+      - Current Nationality
+
+      are MENDATORY and can NOT be empty!`
     });
     return;
   }
