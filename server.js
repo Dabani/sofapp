@@ -25,6 +25,7 @@ const Federation = db.federation;
 const League = db.league;
 const Competition = db.competition;
 const Team = db.team;
+const Season = db.season;
 
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -52,6 +53,7 @@ require("./app/routes/federation.routes")(app);
 require("./app/routes/league.routes")(app);
 require("./app/routes/competition.routes")(app);
 require("./app/routes/team.routes")(app);
+require("./app/routes/season.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -675,6 +677,78 @@ function initial() {
     webUrl: "musanze.sofapp.com",
     location: "Kigali",
     logoUrl: "musanze.png",
+    published: true
+  });
+
+  Season.create({
+    id: 1,
+    federationId: 1,
+    name: "2015-2016",
+    slug: "2015-2016",
+    description: "",
+    seasonStart: "2015-09-05",
+    seasonEnd: "2016-07-04",
+    state: "archive",
+    published: true
+  });
+
+  Season.create({
+    id: 2,
+    federationId: 1,
+    name: "2016-2017",
+    slug: "2016-2017",
+    description: "",
+    seasonStart: "2016-09-05",
+    seasonEnd: "2017-07-04",
+    state: "archive",
+    published: true
+  });
+
+  Season.create({
+    id: 3,
+    federationId: 1,
+    name: "2017-2018",
+    slug: "2017-2018",
+    description: "",
+    seasonStart: "2017-09-05",
+    seasonEnd: "2018-07-04",
+    state: "archive",
+    published: true
+  });
+
+  Season.create({
+    id: 4,
+    federationId: 1,
+    name: "2018-2019",
+    slug: "2018-2019",
+    description: "",
+    seasonStart: "2018-09-05",
+    seasonEnd: "2019-07-04",
+    state: "archive",
+    published: true
+  });
+
+  Season.create({
+    id: 5,
+    federationId: 1,
+    name: "2019-2020",
+    slug: "2019-2020",
+    description: "",
+    seasonStart: "2019-09-05",
+    seasonEnd: "2020-07-04",
+    state: "",
+    published: true
+  });
+
+  Season.create({
+    id: 6,
+    federationId: 1,
+    name: "2020-2021",
+    slug: "2020-2021",
+    description: "",
+    seasonStart: "2020-12-04",
+    seasonEnd: "2021-07-04",
+    state: "upcoming",
     published: true
   });
 

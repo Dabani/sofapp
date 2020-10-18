@@ -1,9 +1,6 @@
 const db = require("../models");
-// const { user } = require("../models");
 const User = db.user;
 const Profile = db.profile;
-const Competition = db.competition;
-const Team = db.team;
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -14,14 +11,14 @@ const getPagination = (page, size) => {
 };
 
 const getPagingData = (data, page, limit) => {
-  const { count: totalItems, rows: leagues } = data;
+  const { count: totalItems, rows: seasons } = data;
   const currentPage = page ? +page : 0;
   const totalPages = Math.ceil(totalItems / limit);
 
-  return { totalItems, leagues, totalPages, currentPage };
+  return { totalItems, seasons, totalPages, currentPage };
 };
 
-// Create and Save a new League
+// Create and Save a new Season
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.name) {
@@ -31,35 +28,33 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a League
-  const league = {
+  // Create a Season
+  const season = {
     federationId: req.body.federationId,
     name: req.body.name,
     slug: req.body.slug,
     description: req.body.description,
-    telephone: req.body.telephone,
-    email: req.body.email,
-    webUrl: req.body.webUrl,
-    location: req.body.location,
-    logoUrl: req.body.logoUrl,
+    seasonStart: req.body.seasonStart,
+    seasonEnd: req.body.seasonEnd,
+    state: req.body.state,
     published: req.body.published ? req.body.published : false
   };
 
-  // Save League in the database
-  db.league.create(league)
+  // Save Season in the database
+  db.season.create(season)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the League."
+          err.message || "Some error occurred while creating the Season."
       });
     });
 
 };
 
-// Retrieve all Leagues from the database.
+// Retrieve all Seasons from the database.
 exports.findAll = (req, res) => {
 
   const { page, size, name } = req.query;
@@ -67,7 +62,7 @@ exports.findAll = (req, res) => {
 
   const { limit, offset } = getPagination(page, size);
 
-  db.league.findAndCountAll({
+  db.season.findAndCountAll({
     include: [
       {
         model: User,
@@ -79,12 +74,6 @@ exports.findAll = (req, res) => {
         include: {
           model: Profile
         }
-      },
-      {
-        model: Competition
-      },
-      {
-        model: Team
       }
     ],
     where: condition, limit, offset
@@ -96,17 +85,17 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving leagues."
+          err.message || "Some error occurred while retrieving seasons."
       });
     });
 
 };
 
-// Find a single League with an id
+// Find a single Season with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  db.league.findByPk(id, {
+  db.season.findByPk(id, {
     include: [
       {
         model: User,
@@ -118,12 +107,6 @@ exports.findOne = (req, res) => {
         include: {
           model: Profile
         }
-      },
-      {
-        model: Competition
-      },
-      {
-        model: Team
       }
     ],
   })
@@ -132,87 +115,87 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving League with id=" + id
+        message: "Error retrieving Season with id=" + id
       });
     });
 
 };
 
-// Update a League by the id in the request
+// Update a Season by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  db.league.update(req.body, {
+  db.season.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "League was updated successfully."
+          message: "Season was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update League with id=${id}. Maybe League was not found or req.body is empty!`
+          message: `Cannot update Season with id=${id}. Maybe Season was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating League with id=" + id
+        message: "Error updating Season with id=" + id
       });
     });
 };
 
-// Delete a League with the specified id in the request
+// Delete a Season with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  db.league.destroy({
+  db.season.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "League was deleted successfully!"
+          message: "Season was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete League with id=${id}. Maybe League was not found!`
+          message: `Cannot delete Season with id=${id}. Maybe Season was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete League with id=" + id
+        message: "Could not delete Season with id=" + id
       });
     });
 };
 
-// Delete all Leagues from the database.
+// Delete all Seasons from the database.
 exports.deleteAll = (req, res) => {
-  db.league.destroy({
+  db.season.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Leagues were deleted successfully!` });
+      res.send({ message: `${nums} Seasons were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all leagues."
+          err.message || "Some error occurred while removing all seasons."
       });
     });
 
 };
 
-// Find all published Leagues
+// Find all published Seasons
 exports.findAllPublished = (req, res) => {
 
   const { page, size } = req.query;
   const { limit, offset } = getPagination(page, size);
 
-  db.league.findAndCountAll({ where: { published: true }, limit, offset })
+  db.season.findAndCountAll({ where: { published: true }, limit, offset })
     .then(data => {
       const response = getPagingData(data, page, limit);
       res.send(response);
@@ -220,18 +203,18 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving leagues."
+          err.message || "Some error occurred while retrieving seasons."
       });
     });
 
 };
 
-// Add a User to a League
-exports.addUser = (leagueId, userId) => {
-  return db.league.findByPk(leagueId)
-    .then((league) => {
-      if (!league) {
-        console.log("League not found!");
+// Add a User to a Season
+exports.addUser = (seasonId, userId) => {
+  return db.season.findByPk(seasonId)
+    .then((season) => {
+      if (!season) {
+        console.log("Season not found!");
         return null;
       }
       return db.user.findByPk(userId).then((user) => {
@@ -240,12 +223,12 @@ exports.addUser = (leagueId, userId) => {
           return null;
         }
 
-        league.addUser(user);
-        console.log(`>> added User id=${user.id} to League id=${league.id}`);
-        return league;
+        season.addUser(user);
+        console.log(`>> added User id=${user.id} to Season id=${season.id}`);
+        return season;
       });
     })
     .catch((err) => {
-      console.log(">> Error while adding User to League: ", err);
+      console.log(">> Error while adding User to Season: ", err);
     });
 };

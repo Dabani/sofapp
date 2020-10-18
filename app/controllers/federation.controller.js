@@ -2,8 +2,10 @@ const db = require("../models");
 // const { user, league, competition, profile } = require("../models");
 const User = db.user;
 const League = db.league;
-const Competition = db.competition;
 const Profile = db.profile;
+const Competition = db.competition;
+const Team = db.team;
+const Season = db.season;
 
 const Op = db.Sequelize.Op;
 
@@ -115,6 +117,25 @@ exports.findAll = (req, res) => {
                 }
               }
             ]
+          },
+          {
+            model: Team
+          }
+        ]
+      },
+      {
+        model: Season,
+        include: [
+          {
+            model: User,
+            as: "users",
+            attributes: ["id", "username", "email", "state"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Profile
+            }
           }
         ]
       }
@@ -180,9 +201,28 @@ exports.findOne = (req, res) => {
                 }
               }
             ]
+          },
+          {
+            model: Team
           }
         ]
-      }      
+      },
+      {
+        model: Season,
+        include: [
+          {
+            model: User,
+            as: "users",
+            attributes: ["id", "username", "email", "state"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Profile
+            }
+          }
+        ]
+      }     
     ],
   })
     .then(data => {

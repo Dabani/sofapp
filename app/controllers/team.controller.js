@@ -76,9 +76,6 @@ exports.findAll = (req, res) => {
         through: {
           attributes: [],
         }
-      },
-      {
-        model: Competition
       }
     ],
     where: condition, limit, offset
