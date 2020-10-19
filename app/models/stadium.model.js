@@ -40,9 +40,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     groundType: {
       type: Sequelize.ENUM,
-      values: ["Firm Ground", "Soft Ground", "Artificial Grass Surface", "Hybrid Sole Plates", "Hard Ground", "Indoor Surfaces", "Turf - Synthetic Grass Surface", "Street pitch"],
-      default: "Firm Ground",
-      allowNull: false
+      values: ["Firm", "Soft", "Artificial", "Hybrid", "Hard", "Indoor", "Turf", "Street"],
+      allowNull: false,
+      default: "Firm"
     },
     groundWidth: {
       type: Sequelize.INTEGER,
@@ -80,7 +80,7 @@ module.exports = (sequelize, Sequelize) => {
     state: {
       type: Sequelize.ENUM,
       values: ["excellent", "good", "fair", "poor", "damaged"],
-      allowNull: true
+      allowNull: false
     },
     imageUrl: {
       type: Sequelize.STRING(191),

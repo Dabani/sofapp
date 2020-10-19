@@ -48,8 +48,8 @@ exports.create = (req, res) => {
     controlRoom: req.body.controlRoom,
     scorePanel: req.body.scorePanel,
     stadiumLights: req.body.stadiumLights,
-    imageUrl: req.body.imageUrl,
     state: req.body.state,
+    imageUrl: req.body.imageUrl,
     published: req.body.published ? req.body.published : false
   };
 
