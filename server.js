@@ -18,16 +18,15 @@ const CompetitionController = require("./app/controllers/competition.controller"
 const TeamController = require("./app/controllers/team.controller");
 const Role = db.role;
 const User = db.user;
-// const UserRole = db.user_role;
 const Profile = db.profile;
 const Federation = db.federation;
-// const UserFederation = db.user_federation;
 const League = db.league;
 const Competition = db.competition;
 const Team = db.team;
 const Season = db.season;
 const Stadium = db.stadium;
 const Subscription = db.subscription;
+const Day = db.day;
 
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -58,6 +57,7 @@ require("./app/routes/team.routes")(app);
 require("./app/routes/season.routes")(app);
 require("./app/routes/stadium.routes")(app);
 require("./app/routes/subscription.routes")(app);
+require("./app/routes/day.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -934,6 +934,96 @@ function initial() {
     seasonId: 6,
     teamId: 6,
     state: "approved",
+    published: true
+  });
+
+  Day.create({
+    id: 1,
+    matchDay: 1,
+    name: "Day 01",
+    slug: "day-01",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 2,
+    matchDay: 2,
+    name: "Day 02",
+    slug: "day-02",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 3,
+    matchDay: 3,
+    name: "Day 03",
+    slug: "day-03",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 4,
+    matchDay: 4,
+    name: "Day 04",
+    slug: "day-04",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 5,
+    matchDay: 5,
+    name: "Day 05",
+    slug: "day-05",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 6,
+    matchDay: 6,
+    name: "Day 06",
+    slug: "day-06",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 7,
+    matchDay: 7,
+    name: "Day 07",
+    slug: "day-07",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 8,
+    matchDay: 8,
+    name: "Day 08",
+    slug: "day-08",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 9,
+    matchDay: 9,
+    name: "Day 09",
+    slug: "day-09",
+    description: "",
+    published: true
+  });
+
+  Day.create({
+    id: 10,
+    matchDay: 10,
+    name: "Day 10",
+    slug: "day-10",
+    description: "",
     published: true
   });
 

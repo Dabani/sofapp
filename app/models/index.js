@@ -34,6 +34,7 @@ db.team = require("../models/team.model.js")(sequelize, Sequelize);
 db.season = require("../models/season.model.js")(sequelize, Sequelize);
 db.stadium = require("../models/stadium.model.js")(sequelize, Sequelize);
 db.subscription = require("../models/subscription.model.js")(sequelize, Sequelize);
+db.day = require("../models/day.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -190,6 +191,19 @@ db.user.belongsToMany(db.subscription, {
   as: "subscriptions",
   foreignKey: "userId",
   otherKey: "subscriptionId"
+});
+
+db.day.belongsToMany(db.user, {
+  through: "user_days",
+  as: "users",
+  foreignKey: "dayId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.day, {
+  through: "user_days",
+  as: "days",
+  foreignKey: "userId",
+  otherKey: "dayId"
 });
 
 
