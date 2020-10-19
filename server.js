@@ -762,9 +762,9 @@ function initial() {
     description: "",
     location: "Remera",
     seats: 30000,
-    dateOfConstruction: "0000-00-00",
-    dateOfRehabilitation: "0000-00-00",
-    groundType: "Firm Ground",
+    dateOfConstruction: "2020-10-19",
+    dateOfRehabilitation: "2020-10-19",
+    groundType: "Firm",
     groundWidth: 75,
     groundLength: 110,
     dressRoom: true,
@@ -773,7 +773,7 @@ function initial() {
     controlRoom: true,
     scorePanel: true,
     stadiumLights: true,
-    state: "Excellent",
+    state: "excellent",
     published: true
   });
 
@@ -785,9 +785,9 @@ function initial() {
     description: "",
     location: "Nyamirambo",
     seats: 3000,
-    dateOfConstruction: "0000-00-00",
-    dateOfRehabilitation: "0000-00-00",
-    groundType: "Artificial Grass Surface",
+    dateOfConstruction: "2020-10-19",
+    dateOfRehabilitation: "2020-10-19",
+    groundType: "Artificial",
     groundWidth: 64,
     groundLength: 100,
     dressRoom: true,
@@ -796,7 +796,7 @@ function initial() {
     controlRoom: false,
     scorePanel: false,
     stadiumLights: true,
-    state: "Fair",
+    state: "fair",
     published: true
   });
 
@@ -808,9 +808,9 @@ function initial() {
     description: "",
     location: "Nyamiramo",
     seats: 8000,
-    dateOfConstruction: "0000-00-00",
-    dateOfRehabilitation: "0000-00-00",
-    groundType: "Artificial Grass Surface",
+    dateOfConstruction: "2020-10-19",
+    dateOfRehabilitation: "2020-10-19",
+    groundType: "Artificial",
     groundWidth: 68,
     groundLength: 105,
     dressRoom: true,
@@ -819,7 +819,7 @@ function initial() {
     controlRoom: false,
     scorePanel: true,
     stadiumLights: true,
-    state: "Good",
+    state: "good",
     published: true
   });
 
@@ -833,7 +833,7 @@ function initial() {
     seats: 5000,
     dateOfConstruction: "0000-00-00",
     dateOfRehabilitation: "0000-00-00",
-    groundType: "Firm Ground",
+    groundType: "Firm",
     groundWidth: 68,
     groundLength: 105,
     dressRoom: true,
@@ -842,7 +842,7 @@ function initial() {
     controlRoom: false,
     scorePanel: false,
     stadiumLights: true,
-    state: "Good",
+    state: "good",
     published: true
   });
 
@@ -854,9 +854,9 @@ function initial() {
     description: "",
     location: "Huye",
     seats: 5000,
-    dateOfConstruction: "0000-00-00",
-    dateOfRehabilitation: "0000-00-00",
-    groundType: "Artificial Grass Surface",
+    dateOfConstruction: "2020-10-19",
+    dateOfRehabilitation: "2020-10-19",
+    groundType: "Artificial",
     groundWidth: 64,
     groundLength: 100,
     dressRoom: true,
@@ -865,7 +865,7 @@ function initial() {
     controlRoom: false,
     scorePanel: true,
     stadiumLights: true,
-    state: "Excellent",
+    state: "excellent",
     published: true
   });
 
