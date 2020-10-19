@@ -86,10 +86,6 @@ exports.findAll = (req, res) => {
         attributes: ["username", "email"],
         through: {
           attributes: [],
-        },
-        include: {
-          model: Profile,
-          attributes: ["firstName", "lastName"]
         }
       },
       {
@@ -142,10 +138,6 @@ exports.findOne = (req, res) => {
         attributes: ["username", "email"],
         through: {
           attributes: [],
-        },
-        include: {
-          model: Profile,
-          attributes: ["firstName", "lastName"]
         }
       },
       {

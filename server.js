@@ -27,6 +27,7 @@ const Competition = db.competition;
 const Team = db.team;
 const Season = db.season;
 const Stadium = db.stadium;
+const Subscription = db.subscription;
 
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -56,6 +57,7 @@ require("./app/routes/competition.routes")(app);
 require("./app/routes/team.routes")(app);
 require("./app/routes/season.routes")(app);
 require("./app/routes/stadium.routes")(app);
+require("./app/routes/subscription.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -866,6 +868,72 @@ function initial() {
     scorePanel: true,
     stadiumLights: true,
     state: "excellent",
+    published: true
+  });
+
+  Subscription.create({
+    id: 1,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    teamId: 1,
+    state: "approved",
+    published: true
+  });
+
+  Subscription.create({
+    id: 2,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    teamId: 2,
+    state: "approved",
+    published: true
+  });
+
+  Subscription.create({
+    id: 3,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    teamId: 3,
+    state: "approved",
+    published: true
+  });
+
+  Subscription.create({
+    id: 4,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    teamId: 4,
+    state: "approved",
+    published: true
+  });
+
+  Subscription.create({
+    id: 5,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    teamId: 5,
+    state: "approved",
+    published: true
+  });
+
+  Subscription.create({
+    id: 6,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    teamId: 6,
+    state: "approved",
     published: true
   });
 

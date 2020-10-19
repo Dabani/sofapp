@@ -33,6 +33,7 @@ db.competition = require("../models/competition.model.js")(sequelize, Sequelize)
 db.team = require("../models/team.model.js")(sequelize, Sequelize);
 db.season = require("../models/season.model.js")(sequelize, Sequelize);
 db.stadium = require("../models/stadium.model.js")(sequelize, Sequelize);
+db.subscription = require("../models/subscription.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -153,8 +154,43 @@ db.user.belongsToMany(db.stadium, {
   otherKey: "stadiumId"
 });
 
+db.subscription.belongsTo(db.federation);
+db.federation.hasMany(db.subscription, {
+  foreignKey: "federationId"
+});
 
+db.subscription.belongsTo(db.league);
+db.league.hasMany(db.subscription, {
+  foreignKey: "leagueId"
+});
 
+db.subscription.belongsTo(db.competition);
+db.competition.hasMany(db.subscription, {
+  foreignKey: "competitionId"
+});
+
+db.subscription.belongsTo(db.season);
+db.season.hasMany(db.subscription, {
+  foreignKey: "seasonId"
+});
+
+db.subscription.belongsTo(db.team);
+db.team.hasMany(db.subscription, {
+  foreignKey: "teamId"
+});
+
+db.subscription.belongsToMany(db.user, {
+  through: "user_subscriptions",
+  as: "users",
+  foreignKey: "subscriptionId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.subscription, {
+  through: "user_subscriptions",
+  as: "subscriptions",
+  foreignKey: "userId",
+  otherKey: "subscriptionId"
+});
 
 
 db.ROLES = ["user", "player", "agent", "manager", "executive", "referee", "staff", "admin"];
