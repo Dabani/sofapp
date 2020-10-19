@@ -155,6 +155,19 @@ db.user.belongsToMany(db.stadium, {
   otherKey: "stadiumId"
 });
 
+db.subscription.belongsToMany(db.user, {
+  through: "user_subscriptions",
+  as: "users",
+  foreignKey: "subscriptionId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.subscription, {
+  through: "user_subscriptions",
+  as: "subscriptions",
+  foreignKey: "userId",
+  otherKey: "subscriptionId"
+});
+
 db.subscription.belongsTo(db.federation);
 db.federation.hasMany(db.subscription, {
   foreignKey: "federationId"
@@ -178,19 +191,6 @@ db.season.hasMany(db.subscription, {
 db.subscription.belongsTo(db.team);
 db.team.hasMany(db.subscription, {
   foreignKey: "teamId"
-});
-
-db.subscription.belongsToMany(db.user, {
-  through: "user_subscriptions",
-  as: "users",
-  foreignKey: "subscriptionId",
-  otherKey: "userId"
-});
-db.user.belongsToMany(db.subscription, {
-  through: "user_subscriptions",
-  as: "subscriptions",
-  foreignKey: "userId",
-  otherKey: "subscriptionId"
 });
 
 db.day.belongsToMany(db.user, {
