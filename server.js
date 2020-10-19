@@ -26,6 +26,7 @@ const League = db.league;
 const Competition = db.competition;
 const Team = db.team;
 const Season = db.season;
+const Stadium = db.stadium;
 
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -54,6 +55,7 @@ require("./app/routes/league.routes")(app);
 require("./app/routes/competition.routes")(app);
 require("./app/routes/team.routes")(app);
 require("./app/routes/season.routes")(app);
+require("./app/routes/stadium.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -749,6 +751,121 @@ function initial() {
     seasonStart: "2020-12-04",
     seasonEnd: "2021-07-04",
     state: "upcoming",
+    published: true
+  });
+
+  Stadium.create({
+    id: 1,
+    federationId: 1,
+    name: "Amahoro",
+    slug: "amahoro",
+    description: "",
+    location: "Remera",
+    seats: 30000,
+    dateOfConstruction: "0000-00-00",
+    dateOfRehabilitation: "0000-00-00",
+    groundType: "Firm Ground",
+    groundWidth: 75,
+    groundLength: 110,
+    dressRoom: true,
+    pressRoom: true,
+    washRoom: true,
+    controlRoom: true,
+    scorePanel: true,
+    stadiumLights: true,
+    state: "Excellent",
+    published: true
+  });
+
+  Stadium.create({
+    id: 2,
+    federationId: 1,
+    name: "Umumena",
+    slug: "umumena",
+    description: "",
+    location: "Nyamirambo",
+    seats: 3000,
+    dateOfConstruction: "0000-00-00",
+    dateOfRehabilitation: "0000-00-00",
+    groundType: "Artificial Grass Surface",
+    groundWidth: 64,
+    groundLength: 100,
+    dressRoom: true,
+    pressRoom: true,
+    washRoom: true,
+    controlRoom: false,
+    scorePanel: false,
+    stadiumLights: true,
+    state: "Fair",
+    published: true
+  });
+
+  Stadium.create({
+    id: 3,
+    federationId: 1,
+    name: "Kigali Stadium",
+    slug: "kigali-stadium",
+    description: "",
+    location: "Nyamiramo",
+    seats: 8000,
+    dateOfConstruction: "0000-00-00",
+    dateOfRehabilitation: "0000-00-00",
+    groundType: "Artificial Grass Surface",
+    groundWidth: 68,
+    groundLength: 105,
+    dressRoom: true,
+    pressRoom: true,
+    washRoom: true,
+    controlRoom: false,
+    scorePanel: true,
+    stadiumLights: true,
+    state: "Good",
+    published: true
+  });
+
+  Stadium.create({
+    id: 4,
+    federationId: 1,
+    name: "Umuganda",
+    slug: "umuganda",
+    description: "",
+    location: "Rubavu",
+    seats: 5000,
+    dateOfConstruction: "0000-00-00",
+    dateOfRehabilitation: "0000-00-00",
+    groundType: "Firm Ground",
+    groundWidth: 68,
+    groundLength: 105,
+    dressRoom: true,
+    pressRoom: true,
+    washRoom: true,
+    controlRoom: false,
+    scorePanel: false,
+    stadiumLights: true,
+    state: "Good",
+    published: true
+  });
+
+  Stadium.create({
+    id: 5,
+    federationId: 1,
+    name: "Huye",
+    slug: "huye",
+    description: "",
+    location: "Huye",
+    seats: 5000,
+    dateOfConstruction: "0000-00-00",
+    dateOfRehabilitation: "0000-00-00",
+    groundType: "Artificial Grass Surface",
+    groundWidth: 64,
+    groundLength: 100,
+    dressRoom: true,
+    pressRoom: true,
+    washRoom: true,
+    controlRoom: false,
+    scorePanel: true,
+    stadiumLights: true,
+    state: "Excellent",
     published: true
   });
 

@@ -6,6 +6,7 @@ const Profile = db.profile;
 const Competition = db.competition;
 const Team = db.team;
 const Season = db.season;
+const Stadium = db.stadium;
 
 const Op = db.Sequelize.Op;
 
@@ -138,6 +139,22 @@ exports.findAll = (req, res) => {
             }
           }
         ]
+      },
+      {
+        model: Stadium,
+        include: [
+          {
+            model: User,
+            as: "users",
+            attributes: ["id", "username", "email", "state"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Profile
+            }
+          }
+        ]
       }
     ],
     where: condition, limit, offset 
@@ -222,7 +239,23 @@ exports.findOne = (req, res) => {
             }
           }
         ]
-      }     
+      },
+      {
+        model: Stadium,
+        include: [
+          {
+            model: User,
+            as: "users",
+            attributes: ["id", "username", "email", "state"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: Profile
+            }
+          }
+        ]
+      }    
     ],
   })
     .then(data => {
