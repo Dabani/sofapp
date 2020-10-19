@@ -1,10 +1,7 @@
 const db = require("../models");
-// const { user, league, competition, profile } = require("../models");
 const User = db.user;
 const League = db.league;
 const Profile = db.profile;
-const Competition = db.competition;
-const Team = db.team;
 const Season = db.season;
 const Stadium = db.stadium;
 
@@ -90,71 +87,13 @@ exports.findAll = (req, res) => {
         }
       },
       {
-        model: League,
-        include: [
-          {
-            model: User,
-            as: "users",
-            attributes: ["id", "username", "email", "state"],
-            through: {
-              attributes: [],
-            },
-            include: {
-              model: Profile
-            }
-          },
-          {
-            model: Competition,
-            include: [
-              {
-                model: User,
-                as: "users",
-                attributes: ["id", "username", "email", "state"],
-                through: {
-                  attributes: [],
-                },
-                include: {
-                  model: Profile
-                }
-              }
-            ]
-          },
-          {
-            model: Team
-          }
-        ]
+        model: League
       },
       {
-        model: Season,
-        include: [
-          {
-            model: User,
-            as: "users",
-            attributes: ["id", "username", "email", "state"],
-            through: {
-              attributes: [],
-            },
-            include: {
-              model: Profile
-            }
-          }
-        ]
+        model: Season
       },
       {
-        model: Stadium,
-        include: [
-          {
-            model: User,
-            as: "users",
-            attributes: ["id", "username", "email", "state"],
-            through: {
-              attributes: [],
-            },
-            include: {
-              model: Profile
-            }
-          }
-        ]
+        model: Stadium
       }
     ],
     where: condition, limit, offset 
@@ -190,72 +129,14 @@ exports.findOne = (req, res) => {
         }
       },
       {
-        model: League,
-        include: [
-          {
-            model: User,
-            as: "users",
-            attributes: ["id", "username", "email", "state"],
-            through: {
-              attributes: [],
-            },
-            include: {
-              model: Profile
-            }
-          },
-          {
-            model: Competition,
-            include: [
-              {
-                model: User,
-                as: "users",
-                attributes: ["id", "username", "email", "state"],
-                through: {
-                  attributes: [],
-                },
-                include: {
-                  model: Profile
-                }
-              }
-            ]
-          },
-          {
-            model: Team
-          }
-        ]
+        model: League
       },
       {
-        model: Season,
-        include: [
-          {
-            model: User,
-            as: "users",
-            attributes: ["id", "username", "email", "state"],
-            through: {
-              attributes: [],
-            },
-            include: {
-              model: Profile
-            }
-          }
-        ]
+        model: Season
       },
       {
-        model: Stadium,
-        include: [
-          {
-            model: User,
-            as: "users",
-            attributes: ["id", "username", "email", "state"],
-            through: {
-              attributes: [],
-            },
-            include: {
-              model: Profile
-            }
-          }
-        ]
-      }    
+        model: Stadium
+      } 
     ],
   })
     .then(data => {

@@ -5,7 +5,7 @@ module.exports = {
   DB: "sofapp",
   dialect: "mysql",
   pool: {
-    max: 5,
+    max: 55,
     min: 0,
     acquire: 30000,
     idle: 10000
