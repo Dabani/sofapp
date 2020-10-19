@@ -1,7 +1,12 @@
 const db = require("../models");
+// const { user, league, competition, profile } = require("../models");
 const User = db.user;
 const League = db.league;
+
 const Profile = db.profile;
+const Competition = db.competition;
+const Team = db.team;
+
 const Season = db.season;
 const Stadium = db.stadium;
 
@@ -78,22 +83,36 @@ exports.findAll = (req, res) => {
       {
         model: User,
         as: "users",
-        attributes: ["id", "username", "email", "state"],
+        attributes: ["username", "email"],
         through: {
           attributes: [],
         },
         include: {
-          model: Profile
+          model: Profile,
+          attributes: ["firstName", "lastName"]
         }
       },
       {
-        model: League
+        model: League,
+        attributes: ["name", "location"],
+        include: [
+          {
+            model: Competition,
+            attributes: ["name"]
+          },
+          {
+            model: Team,
+            attributes: ["name", "colors"]
+          }
+        ]
       },
       {
-        model: Season
+        model: Season,
+        attributes: ["name"]
       },
       {
-        model: Stadium
+        model: Stadium,
+        attributes: ["name", "location"]
       }
     ],
     where: condition, limit, offset 
@@ -120,23 +139,37 @@ exports.findOne = (req, res) => {
       {
         model: User,
         as: "users",
-        attributes: ["id", "username", "email", "state"],
+        attributes: ["username", "email"],
         through: {
           attributes: [],
         },
         include: {
-          model: Profile
+          model: Profile,
+          attributes: ["firstName", "lastName"]
         }
       },
       {
-        model: League
+        model: League,
+        attributes: ["name", "location"],
+        include: [
+          {
+            model: Competition,
+            attributes: ["name"]
+          },
+          {
+            model: Team,
+            attributes: ["name", "colors"]
+          }
+        ]
       },
       {
-        model: Season
+        model: Season,
+        attributes: ["name"]
       },
       {
-        model: Stadium
-      } 
+        model: Stadium,
+        attributes: ["name", "location"]
+      }    
     ],
   })
     .then(data => {
