@@ -1,6 +1,4 @@
 const db = require("../models");
-const { federation } = require("../models");
-// const { user } = require("../models");
 const User = db.user;
 const Profile = db.profile;
 const Federation = db.federation;
@@ -8,6 +6,8 @@ const League = db.league;
 const Competition = db.competition;
 const Season = db.season;
 const Team = db.team;
+const Day = db.day;
+const Stadium = db.stadium;
 const Op = db.Sequelize.Op;
 
 const getPagination = (page, size) => {
@@ -18,63 +18,66 @@ const getPagination = (page, size) => {
 };
 
 const getPagingData = (data, page, limit) => {
-  const { count: totalItems, rows: subscriptions } = data;
+  const { count: totalItems, rows: fixtures } = data;
   const currentPage = page ? +page : 0;
   const totalPages = Math.ceil(totalItems / limit);
 
-  return { totalItems, subscriptions, totalPages, currentPage };
+  return { totalItems, fixtures, totalPages, currentPage };
 };
 
-// Create and Save a new Subscription
+// Create and Save a new Fixture
 exports.create = (req, res) => {
   // Validate request
-  if ((!req.body.federationId) || (!req.body.leagueId) || (!req.body.competitionId) || (!req.body.seasonId) || (!req.body.teamId)) {
+  if ((!req.body.federationId) || (!req.body.leagueId) || (!req.body.competitionId) || (!req.body.seasonId) || (!req.body.dayId) || (!req.body.homeTeamId) || (!req.body.awayTeamId)) {
     res.status(400).send({
       message: `None of the following fields can not be empty:
       - Federation
       - League
       - Competition
       - Season
-      - Team`
+      - Home Team
+      - Away Team
+      - Match Day
+      - Stadium`
     });
     return;
   }
 
-  // Create a Subscription
-  const subscription = {
+  // Create a Fixture
+  const fixture = {
     federationId: req.body.federationId,
     leagueId: req.body.leagueId,
     competitionId: req.body.competitionId,
     seasonId: req.body.seasonId,
-    teamId: req.body.teamId,
+    dayId: req.body.dayId,
+    homeTeamId: req.body.homeTeamId,
+    awayTeamId: req.body.awayTeamId,
+    stadiumId: req.body.stadiumId,
+    gameDate: req.body.gameDate,
+    gameTime: req.body.gameTime,
+    homeScore: req.body.homeScore,
+    awayScore: req.body.awayScore,
     state: req.body.state,
     published: req.body.published ? req.body.published : false
   };
 
-  // Save Subscription in the database
-  db.subscription.create(subscription)
+  // Save Fixture in the database
+  db.fixture.create(fixture)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Subscription."
+          err.message || "Some error occurred while creating the Fixture."
       });
     });
 
 };
 
-// Retrieve all Subscriptions from the database.
-exports.findAll = (/* req, res */) => {
-/* 
-  const { page, size, name } = req.query;
-  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-
-  const { limit, offset } = getPagination(page, size);
-  db.subscription.findAndCountAll({
- */
-  db.subscription.findAll({
+// Retrieve all Fixtures from the database.
+exports.findAll = () => {
+  db.fixture.findAll({
     include: [
       {
         model: User,
@@ -105,37 +108,39 @@ exports.findAll = (/* req, res */) => {
         attributes: ["name"]
       },
       {
+        model: Day,
+        attributes: ["name"]
+      },
+      {
         model: Team,
+        as: "HomeTeam",
+        attributes: ["name"]
+      },
+      {
+        model: Team,
+        as: "AwayTeam",
+        attributes: ["name"]
+      },
+      {
+        model: Stadium,
         attributes: ["name"]
       }
-    ],
-    // where: condition, limit, offset
-  })/* 
-    .then(data => {
-      
-      const response = getPagingData(data, page, limit);
-      res.send(response);
-     
-     res.send(data);
-    }) */
-    .then((subscriptions) => {
-      return subscriptions;
+    ]
+  })
+    .then((fixtures) => {
+      return fixtures;
     })
     .catch(err => {
-      /* res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving subscriptions."
-      }); */
-      console.log(">> Some error occurred while retrieving subscriptions ", err);
+      console.log(">> Some error occurred while retrieving fixtures", err);
     });
 
 };
 
-// Find a single Subscription with an id
+// Find a single Fixture with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  db.subscription.findByPk(id, {
+  db.fixture.findByPk(id, {
     include: [
       {
         model: User,
@@ -166,7 +171,21 @@ exports.findOne = (req, res) => {
         attributes: ["name"]
       },
       {
+        model: Day,
+        attributes: ["name"]
+      },
+      {
         model: Team,
+        as: "HomeTeam",
+        attributes: ["name"]
+      },
+      {
+        model: Team,
+        as: "AwayTeam",
+        attributes: ["name"]
+      },
+      {
+        model: Stadium,
         attributes: ["name"]
       }
     ],
@@ -176,87 +195,87 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || "Error retrieving Subscription with id=" + id
+        message: "Error retrieving Fixture with id=" + id
       });
     });
 
 };
 
-// Update a Subscription by the id in the request
+// Update a Fixture by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  db.subscription.update(req.body, {
+  db.fixture.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Subscription was updated successfully."
+          message: "Fixture was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Subscription with id=${id}. Maybe Subscription was not found or req.body is empty!`
+          message: `Cannot update Fixture with id=${id}. Maybe Fixture was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || "Error updating Subscription with id=" + id
+        message: "Error updating Fixture with id=" + id
       });
     });
 };
 
-// Delete a Subscription with the specified id in the request
+// Delete a Fixture with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  db.subscription.destroy({
+  db.fixture.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Subscription was deleted successfully!"
+          message: "Fixture was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Subscription with id=${id}. Maybe Subscription was not found!`
+          message: `Cannot delete Fixture with id=${id}. Maybe Fixture was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || "Could not delete Subscription with id=" + id
+        message: "Could not delete Fixture with id=" + id
       });
     });
 };
 
-// Delete all Subscriptions from the database.
+// Delete all Fixtures from the database.
 exports.deleteAll = (req, res) => {
-  db.subscription.destroy({
+  db.fixture.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Subscriptions were deleted successfully!` });
+      res.send({ message: `${nums} Fixtures were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all subscriptions."
+          err.message || "Some error occurred while removing all fixtures."
       });
     });
 
 };
 
-// Find all published Subscriptions
+// Find all published Fixtures
 exports.findAllPublished = (req, res) => {
 
   const { page, size } = req.query;
   const { limit, offset } = getPagination(page, size);
 
-  db.subscription.findAndCountAll({ where: { published: true }, limit, offset })
+  db.fixture.findAndCountAll({ where: { published: true }, limit, offset })
     .then(data => {
       const response = getPagingData(data, page, limit);
       res.send(response);
@@ -264,18 +283,18 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving subscriptions."
+          err.message || "Some error occurred while retrieving fixtures."
       });
     });
 
 };
 
-// Add a User to a Subscription
-exports.addUser = (subscriptionId, userId) => {
-  return db.subscription.findByPk(subscriptionId)
-    .then((subscription) => {
-      if (!subscription) {
-        console.log("Subscription not found!");
+// Add a User to a Fixture
+exports.addUser = (fixtureId, userId) => {
+  return db.fixture.findByPk(fixtureId)
+    .then((fixture) => {
+      if (!fixture) {
+        console.log("Fixture not found!");
         return null;
       }
       return db.user.findByPk(userId).then((user) => {
@@ -284,12 +303,12 @@ exports.addUser = (subscriptionId, userId) => {
           return null;
         }
 
-        subscription.addUser(user);
-        console.log(`>> added User id=${user.id} to Subscription id=${subscription.id}`);
-        return subscription;
+        fixture.addUser(user);
+        console.log(`>> added User id=${user.id} to Fixture id=${fixture.id}`);
+        return fixture;
       });
     })
     .catch((err) => {
-      console.log(">> Error while adding User to Subscription: ", err);
+      console.log(">> Error while adding User to Fixture: ", err);
     });
 };

@@ -27,6 +27,7 @@ const Season = db.season;
 const Stadium = db.stadium;
 const Subscription = db.subscription;
 const Day = db.day;
+const Fixture = db.fixture;
 
 
 db.sequelize.sync({ force: true }).then(() => {
@@ -58,6 +59,7 @@ require("./app/routes/season.routes")(app);
 require("./app/routes/stadium.routes")(app);
 require("./app/routes/subscription.routes")(app);
 require("./app/routes/day.routes")(app);
+require("./app/routes/fixture.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -293,42 +295,7 @@ function initial() {
     state: "private",
     published: true
   });
-/* 
-  UserRole.create({
-    roleId: 8,
-    userId: 1
-  });
 
-  UserRole.create({
-    roleId: 7,
-    userId: 2
-  });
-
-  UserRole.create({
-    roleId: 6,
-    userId: 3
-  });
-
-  UserRole.create({
-    roleId: 5,
-    userId: 4
-  });
-
-  UserRole.create({
-    roleId: 4,
-    userId: 5
-  });
-
-  UserRole.create({
-    roleId: 3,
-    userId: 6
-  });
-
-  UserRole.create({
-    roleId: 2,
-    userId: 7
-  });
- */
   Federation.create({
     id: 1,
     name: "FERWAFA",
@@ -440,47 +407,6 @@ function initial() {
     logoUrl: "fefa.png",
     published: true
   });
-/* 
-  UserFederation.create({
-    federationId: 1,
-    userId: 1
-  });
-
-  UserFederation.create({
-    federationId: 1,
-    userId: 3
-  });
-
-  UserFederation.create({
-    federationId: 2,
-    userId: 6
-  });
-
-  UserFederation.create({
-    federationId: 3,
-    userId: 4
-  });
-
-  UserFederation.create({
-    federationId: 5,
-    userId: 7
-  });
-
-  UserFederation.create({
-    federationId: 6,
-    userId: 1
-  });
-
-  UserFederation.create({
-    federationId: 7,
-    userId: 2
-  });
-
-  UserFederation.create({
-    federationId: 8,
-    userId: 5
-  });
- */
 
   League.create({
     id: 1,
@@ -1024,6 +950,114 @@ function initial() {
     name: "Day 10",
     slug: "day-10",
     description: "",
+    published: true
+  });
+
+  Fixture.create({
+    id: 1,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    dayId: 1,
+    homeTeamId: 1,
+    awayTeamId: 2,
+    stadiumId: 2,
+    gameDate: "2020-09-25",
+    gameTime: "15:00:00",
+    homeScore: 3,
+    awayScore: 0,
+    state: "played",
+    published: true
+  });
+
+  Fixture.create({
+    id: 2,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    dayId: 1,
+    homeTeamId: 3,
+    awayTeamId: 4,
+    stadiumId: 3,
+    gameDate: "2020-09-25",
+    gameTime: "15:00:00",
+    homeScore: 1,
+    awayScore: 2,
+    state: "played",
+    published: true
+  });
+
+  Fixture.create({
+    id: 3,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    dayId: 1,
+    homeTeamId: 5,
+    awayTeamId: 6,
+    stadiumId: 4,
+    gameDate: "2020-09-25",
+    gameTime: "15:00:00",
+    homeScore: 3,
+    awayScore: 2,
+    state: "played",
+    published: true
+  });
+
+  Fixture.create({
+    id: 4,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    dayId: 2,
+    homeTeamId: 6,
+    awayTeamId: 1,
+    stadiumId: 5,
+    gameDate: "2020-10-01",
+    gameTime: "15:00:00",
+    homeScore: 1,
+    awayScore: 4,
+    state: "played",
+    published: true
+  });
+
+  Fixture.create({
+    id: 5,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    dayId: 2,
+    homeTeamId: 4,
+    awayTeamId: 5,
+    stadiumId: 4,
+    gameDate: "2020-10-01",
+    gameTime: "15:00:00",
+    homeScore: 1,
+    awayScore: 1,
+    state: "played",
+    published: true
+  });
+
+  Fixture.create({
+    id: 6,
+    federationId: 1,
+    leagueId: 1,
+    competitionId: 1,
+    seasonId: 6,
+    dayId: 2,
+    homeTeamId: 2,
+    awayTeamId: 3,
+    stadiumId: 1,
+    gameDate: "2020-09-25",
+    gameTime: "15:00:00",
+    homeScore: 2,
+    awayScore: 0,
+    state: "played",
     published: true
   });
 

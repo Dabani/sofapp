@@ -35,6 +35,7 @@ db.season = require("../models/season.model.js")(sequelize, Sequelize);
 db.stadium = require("../models/stadium.model.js")(sequelize, Sequelize);
 db.subscription = require("../models/subscription.model.js")(sequelize, Sequelize);
 db.day = require("../models/day.model.js")(sequelize, Sequelize);
+db.fixture = require("../models/fixture.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -62,11 +63,13 @@ db.user.belongsToMany(db.federation, {
 
 db.profile.belongsTo(db.user);
 db.user.hasOne(db.profile, {
-  foreignKey: "userId"
+  foreignKey: "userId",
+  sourceKey: "id"
 });
 
 db.federation.hasMany(db.league, {
-  foreignKey: "federationId"
+  foreignKey: "federationId",
+  sourceKey: "id"
 });
 db.league.belongsTo(db.federation);
 
@@ -85,7 +88,8 @@ db.user.belongsToMany(db.league, {
 
 db.competition.belongsTo(db.league);
 db.league.hasMany(db.competition, {
-  foreignKey: "leagueId"
+  foreignKey: "leagueId",
+  sourceKey: "id"
 });
 
 db.competition.belongsToMany(db.user, {
@@ -103,7 +107,8 @@ db.user.belongsToMany(db.competition, {
 
 db.team.belongsTo(db.league);
 db.league.hasMany(db.team, {
-  foreignKey: "leagueId"
+  foreignKey: "leagueId",
+  sourceKey: "id"
 });
 
 db.team.belongsToMany(db.user, {
@@ -121,7 +126,8 @@ db.user.belongsToMany(db.team, {
 
 db.season.belongsTo(db.federation);
 db.federation.hasMany(db.season, {
-  foreignKey: "federationId"
+  foreignKey: "federationId",
+  sourceKey: "id"
 });
 
 db.season.belongsToMany(db.user, {
@@ -139,7 +145,8 @@ db.user.belongsToMany(db.season, {
 
 db.stadium.belongsTo(db.federation);
 db.federation.hasMany(db.stadium, {
-  foreignKey: "federationId"
+  foreignKey: "federationId",
+  sourceKey: "id"
 });
 
 db.stadium.belongsToMany(db.user, {
@@ -170,27 +177,32 @@ db.user.belongsToMany(db.subscription, {
 
 db.subscription.belongsTo(db.federation);
 db.federation.hasMany(db.subscription, {
-  foreignKey: "federationId"
+  foreignKey: "federationId",
+  sourceKey: "id"
 });
 
 db.subscription.belongsTo(db.league);
 db.league.hasMany(db.subscription, {
-  foreignKey: "leagueId"
+  foreignKey: "leagueId",
+  sourceKey: "id"
 });
 
 db.subscription.belongsTo(db.competition);
 db.competition.hasMany(db.subscription, {
-  foreignKey: "competitionId"
+  foreignKey: "competitionId",
+  sourceKey: "id"
 });
 
 db.subscription.belongsTo(db.season);
 db.season.hasMany(db.subscription, {
-  foreignKey: "seasonId"
+  foreignKey: "seasonId",
+  sourceKey: "id"
 });
 
 db.subscription.belongsTo(db.team);
 db.team.hasMany(db.subscription, {
-  foreignKey: "teamId"
+  foreignKey: "teamId",
+  sourceKey: "id"
 });
 
 db.day.belongsToMany(db.user, {
@@ -204,6 +216,68 @@ db.user.belongsToMany(db.day, {
   as: "days",
   foreignKey: "userId",
   otherKey: "dayId"
+});
+
+db.fixture.belongsToMany(db.user, {
+  through: "user_fixtures",
+  as: "users",
+  foreignKey: "fixtureId",
+  otherKey: "userId"
+});
+db.user.belongsToMany(db.fixture, {
+  through: "user_fixtures",
+  as: "fixtures",
+  foreignKey: "userId",
+  otherKey: "fixtureId"
+});
+
+db.fixture.belongsTo(db.federation);
+db.federation.hasMany(db.fixture, {
+  foreignKey: "federationId",
+  sourceKey: "id"
+});
+
+db.fixture.belongsTo(db.league);
+db.league.hasMany(db.fixture, {
+  foreignKey: "leagueId",
+  sourceKey: "id"
+});
+
+db.fixture.belongsTo(db.competition);
+db.competition.hasMany(db.fixture, {
+  foreignKey: "competitionId",
+  sourceKey: "id"
+});
+
+db.fixture.belongsTo(db.season);
+db.season.hasMany(db.fixture, {
+  foreignKey: "seasonId",
+  sourceKey: "id"
+});
+
+db.fixture.belongsTo(db.day);
+db.day.hasMany(db.fixture, {
+  foreignKey: "dayId",
+  sourceKey: "id"
+});
+
+db.fixture.belongsTo(db.team);
+db.team.hasOne(db.fixture, {
+  as: "HomeTeam",
+  foreignKey: "homeTeamId",
+  sourceKey: "id"
+});
+
+db.team.hasOne(db.fixture, {
+  as: "AwayTeam",
+  foreignKey: "awayTeamId",
+  sourceKey: "id"
+});
+
+db.fixture.belongsTo(db.stadium);
+db.stadium.hasMany(db.fixture, {
+  foreignKey: "stadiumId",
+  sourceKey: "id"
 });
 
 
