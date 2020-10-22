@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Team = sequelize.define("teams", {
+  const Team = sequelize.define("teams", attributes, {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -8,7 +8,11 @@ module.exports = (sequelize, Sequelize) => {
     leagueId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "leagues",
+        key: "id"
+      }
     },
     name: {
       type: Sequelize.STRING(191),

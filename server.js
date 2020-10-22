@@ -1,4 +1,4 @@
-"use-strict";
+"use strict";
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -69,6 +69,8 @@ app.listen(PORT, () => {
 
 
 function initial() {
+  console.log(`Dababase populate initial data required!`)
+  /* 
   User.create({
     id: 1,
     username: "admin1",
@@ -1060,7 +1062,7 @@ function initial() {
     state: "played",
     published: true
   });
-
+ */
 /* 
   // Show all Users
   const users = await UserController.findAll();

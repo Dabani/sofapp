@@ -8,7 +8,11 @@ module.exports = (sequelize, Sequelize) => {
     federationId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "federations",
+        key: "id"
+      }
     },
     name: {
       type: Sequelize.STRING(191),

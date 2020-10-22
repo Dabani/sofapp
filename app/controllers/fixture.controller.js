@@ -76,7 +76,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Fixtures from the database.
-exports.findAll = () => {
+exports.findAll = (req, res) => {
   db.fixture.findAll({
     include: [
       {
@@ -91,6 +91,7 @@ exports.findAll = () => {
           attributes: ["firstName", "lastName"]
         }
       },
+/* 
       {
         model: Federation,
         attributes: ["name"]
@@ -111,24 +112,34 @@ exports.findAll = () => {
         model: Day,
         attributes: ["name"]
       },
+
       {
         model: Team,
         as: "HomeTeam",
-        attributes: ["name"]
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        }
       },
       {
         model: Team,
         as: "AwayTeam",
-        attributes: ["name"]
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        }
       },
+      
       {
         model: Stadium,
         attributes: ["name"]
       }
-    ]
+       */
+    ],
+    where: {}
   })
-    .then((fixtures) => {
-      return fixtures;
+    .then(data => {
+      res.send(data);
     })
     .catch(err => {
       console.log(">> Some error occurred while retrieving fixtures", err);
@@ -154,6 +165,7 @@ exports.findOne = (req, res) => {
           attributes: ["firstName", "lastName"]
         }
       },
+      /* 
       {
         model: Federation,
         attributes: ["name"]
@@ -174,20 +186,29 @@ exports.findOne = (req, res) => {
         model: Day,
         attributes: ["name"]
       },
+
       {
         model: Team,
         as: "HomeTeam",
-        attributes: ["name"]
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        }
       },
       {
         model: Team,
         as: "AwayTeam",
-        attributes: ["name"]
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        }
       },
+      
       {
         model: Stadium,
         attributes: ["name"]
       }
+ */
     ],
   })
     .then(data => {
@@ -195,7 +216,7 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Fixture with id=" + id
+        message: err.message || "Error retrieving Fixture with id=" + id
       });
     });
 
@@ -221,7 +242,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Fixture with id=" + id
+        message: err.message || "Error updating Fixture with id=" + id
       });
     });
 };
@@ -246,7 +267,7 @@ exports.delete = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Fixture with id=" + id
+        message: err.message || "Could not delete Fixture with id=" + id
       });
     });
 };

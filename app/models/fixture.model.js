@@ -8,42 +8,74 @@ module.exports = (sequelize, Sequelize) => {
     federationId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "federations",
+        key: "id"
+      }
     },
     leagueId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "leagues",
+        key: "id"
+      }
     },
     competitionId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "federations",
+        key: "id"
+      }
     },
     seasonId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "seasons",
+        key: "id"
+      }
     },
     dayId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "days",
+        key: "id"
+      }
     },
     homeTeamId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "teams",
+        key: "id"
+      }
     },
     awayTeamId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "teams",
+        key: "id"
+      }
     },
     stadiumId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "stadiums",
+        key: "id"
+      }
     },
     gameDate: {
       type: Sequelize.DATEONLY

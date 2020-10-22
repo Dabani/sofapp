@@ -8,27 +8,47 @@ module.exports = (sequelize, Sequelize) => {
     federationId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "federations",
+        key: "id"
+      }
     },
     leagueId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "leagues",
+        key: "id"
+      }
     },
     competitionId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "competitions",
+        key: "id"
+      }
     },
     seasonId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "seasons",
+        key: "id"
+      }
     },
     teamId: {
       type: Sequelize.INTEGER,
       foreignKey: true,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "teams",
+        key: "id"
+      }
     },
     state: {
       type: Sequelize.ENUM,
