@@ -1,5 +1,15 @@
+/* 
+const db = require("../models");
+const Federation = db.federation;
+const League = db.league;
+const Competition = db.competition;
+const Season = db.season;
+const Day = db.day;
+const Stadium = db.stadium;
+const Op = db.Sequelize.Op;
+ */
 module.exports = (sequelize, Sequelize) => {
-  const Team = sequelize.define("teams", attributes, {
+  const Team = sequelize.define("teams", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -46,7 +56,23 @@ module.exports = (sequelize, Sequelize) => {
     },
     published: {
       type: Sequelize.BOOLEAN
+    },
+/* 
+    getPlayedAttribute: function(homeTeamId, awayTeamId){
+      return {
+        where: {
+          id: {
+            [Op.or]:[
+              {
+                [Op.eq]: homeTeamId,
+                [Op.eq]: awayTeamId
+              }
+            ]
+          },
+        }
+      }
     }
+ */
   });
 
   return Team;
